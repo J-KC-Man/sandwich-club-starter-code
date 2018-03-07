@@ -111,7 +111,7 @@ public class DetailActivity extends AppCompatActivity {
         if(sandwich.getIngredients().isEmpty()) {
             ingredients.setText(R.string.no_detail_to_display);
         } else {
-            String ingredientsString = null;
+            String ingredientsString = "";
             for(String s : sandwich.getIngredients()) {
 
                 ingredientsString += s + "\n";

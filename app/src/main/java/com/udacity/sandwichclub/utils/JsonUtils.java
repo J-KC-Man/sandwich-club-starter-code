@@ -49,9 +49,6 @@ public class JsonUtils {
                 }
 
 
-
-
-
                 String placeOfOrigin =  sandwichDetailRootObj.getString("placeOfOrigin");
 
 
