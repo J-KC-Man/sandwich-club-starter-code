@@ -4,16 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
+import java.util.List;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
+
+    // find all tv IDS
+    TextView name;
+    TextView alsoKnownAs;
+    TextView origin;
+    TextView description;
+    TextView ingredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +31,8 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         ImageView ingredientsIv = findViewById(R.id.image_iv);
+
+
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -43,11 +55,12 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
 
+        // set the name of the sandwich
         setTitle(sandwich.getMainName());
     }
 
@@ -56,7 +69,56 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(Sandwich sandwich) {
+
+        alsoKnownAs = findViewById(R.id.also_known_tv);
+        origin = findViewById(R.id.origin_tv);
+        description = findViewById(R.id.description_tv);
+        ingredients = findViewById(R.id.ingredients_tv);
+
+        // set place of origin
+        if(sandwich.getPlaceOfOrigin().isEmpty()) {
+            origin.setText(R.string.no_detail_to_display);
+        } else {
+            origin.setText(sandwich.getPlaceOfOrigin());
+        }
+
+        // set also known as
+        if(sandwich.getAlsoKnownAs().isEmpty()) {
+            alsoKnownAs.setText(R.string.no_detail_to_display);
+        } else {
+            String result = "";
+            for(String s : sandwich.getAlsoKnownAs()) {
+                result += s + ", ";
+            }
+
+//            if result is not empty
+            if(result.length() > 0) {
+                result = result.substring(0, result.length() - 2);
+            }
+
+            alsoKnownAs.setText(result);
+        }
+
+        // set description
+        if(sandwich.getDescription().isEmpty()) {
+            description.setText(R.string.no_detail_to_display);
+        } else {
+            description.setText(sandwich.getDescription());
+        }
+
+        //set ingredients
+        if(sandwich.getIngredients().isEmpty()) {
+            ingredients.setText(R.string.no_detail_to_display);
+        } else {
+            String ingredientsString = null;
+            for(String s : sandwich.getIngredients()) {
+
+                ingredientsString += s + "\n";
+            }
+
+            ingredients.setText(ingredientsString);
+        }
 
     }
 }
