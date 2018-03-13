@@ -19,7 +19,6 @@ public class DetailActivity extends AppCompatActivity {
     private static final int DEFAULT_POSITION = -1;
 
     // find all tv IDS
-    TextView name;
     TextView alsoKnownAs;
     TextView origin;
     TextView description;
@@ -75,14 +74,12 @@ public class DetailActivity extends AppCompatActivity {
     private void populateUI(Sandwich sandwich) {
 
 
-
         // set place of origin
-        if(sandwich.getPlaceOfOrigin().isEmpty()) {
-            origin.setText(R.string.no_detail_to_display);
-        } else {
+        if(!sandwich.getPlaceOfOrigin().isEmpty()) {
             origin.setText(sandwich.getPlaceOfOrigin());
+        } else {
+            origin.setText(R.string.no_detail_to_display);
         }
-
 
 
         // set also known as
@@ -91,17 +88,17 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             String result = "";
             for(String s : sandwich.getAlsoKnownAs()) {
-                result += s + ", ";
+                result += s + "\n";
             }
 
             alsoKnownAs.setText(result);
         }
 
         // set description
-        if(sandwich.getDescription().isEmpty()) {
-            description.setText(R.string.no_detail_to_display);
-        } else {
+        if(!sandwich.getDescription().isEmpty()) {
             description.setText(sandwich.getDescription());
+        } else {
+            description.setText(R.string.no_detail_to_display);
         }
 
         //set ingredients
