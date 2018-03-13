@@ -32,7 +32,10 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageView ingredientsIv = findViewById(R.id.image_iv);
 
-
+        alsoKnownAs = findViewById(R.id.also_known_tv);
+        origin = findViewById(R.id.origin_tv);
+        description = findViewById(R.id.description_tv);
+        ingredients = findViewById(R.id.ingredients_tv);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -71,10 +74,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void populateUI(Sandwich sandwich) {
 
-        alsoKnownAs = findViewById(R.id.also_known_tv);
-        origin = findViewById(R.id.origin_tv);
-        description = findViewById(R.id.description_tv);
-        ingredients = findViewById(R.id.ingredients_tv);
+
 
         // set place of origin
         if(sandwich.getPlaceOfOrigin().isEmpty()) {
@@ -83,18 +83,15 @@ public class DetailActivity extends AppCompatActivity {
             origin.setText(sandwich.getPlaceOfOrigin());
         }
 
+
+
         // set also known as
-        if(sandwich.getAlsoKnownAs().isEmpty()) {
+        if(sandwich.getAlsoKnownAs().get(0).contains("N/A")) {
             alsoKnownAs.setText(R.string.no_detail_to_display);
         } else {
             String result = "";
             for(String s : sandwich.getAlsoKnownAs()) {
                 result += s + ", ";
-            }
-
-//            if result is not empty
-            if(result.length() > 0) {
-                result = result.substring(0, result.length() - 2);
             }
 
             alsoKnownAs.setText(result);
@@ -114,7 +111,7 @@ public class DetailActivity extends AppCompatActivity {
             String ingredientsString = "";
             for(String s : sandwich.getIngredients()) {
 
-                ingredientsString += s + "\n";
+                ingredientsString += s + "\n"; // add the ingredient and start new line
             }
 
             ingredients.setText(ingredientsString);

@@ -32,6 +32,15 @@ public class JsonUtils {
                // extract name
                String mainName = name.optString("mainName");
 
+               // extract place of origin
+               String placeOfOrigin =  sandwichDetailRootObj.getString("placeOfOrigin");
+
+               // extract description
+               String description =  sandwichDetailRootObj.getString("description");
+
+               // extract image
+               String image =  sandwichDetailRootObj.getString("image");
+
 
                 // Extract aka details into array from the name object which is inside the main object
                 JSONArray alsoKnownAs = name.getJSONArray("alsoKnownAs");
@@ -49,13 +58,7 @@ public class JsonUtils {
                 }
 
 
-                String placeOfOrigin =  sandwichDetailRootObj.getString("placeOfOrigin");
-
-
-                String description =  sandwichDetailRootObj.getString("description");
-
-                String image =  sandwichDetailRootObj.getString("image");
-
+                // extract ingredients
                 JSONArray ingredients = sandwichDetailRootObj.getJSONArray("ingredients");
                 ArrayList<String> ingredientsList = new ArrayList<>();
 
@@ -70,7 +73,7 @@ public class JsonUtils {
                 return new Sandwich(mainName, alsoKnownAsList, placeOfOrigin, description,image,ingredientsList);
             }
             catch(JSONException e) {
-//                e.printStackTrace();
+                e.printStackTrace();
                 Log.e("JsonUtils", "The parsing didn't work");
             }
 
